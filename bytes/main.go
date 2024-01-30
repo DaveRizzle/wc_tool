@@ -32,6 +32,6 @@ func Main() {
 	}
 
 	stats := fileInfo.Size()
-	fmt.Println(stats)
+	fmt.Printf("Total bytes in the file: %d\n", stats)
 
 }
