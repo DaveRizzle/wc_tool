@@ -2,10 +2,20 @@ package main
 
 import (
 	"ccwc/bytes"
-	"ccwc/lines" // adjust the path based on your module's name and structure
+	"flag"
 )
 
 func main() {
-	bytes.Main() // calling the Main function from the bytes package
-	lines.Main() // calling the Main function from the bytes package
+	// Define flags
+	var getBytes = flag.Bool("c", false, "Specify this flag to use the bytes module")
+
+	// Parse flags
+	flag.Parse()
+
+	// Switch or if-else to determine which function to call
+	switch {
+	case *getBytes:
+		bytes.Main() // Function from the bytes module
+
+	}
 }
