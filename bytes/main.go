@@ -6,32 +6,25 @@ import (
 )
 
 func Main() {
-	//import the file
 	test := "test.txt"
 
-	//Handle open file errors
+	// Open the file
 	file, err := os.Open(test)
 	if err != nil {
-		fmt.Println("Error: Cannot open file", err)
+		fmt.Printf("Error: Cannot open file: %v\n", err)
 		return
 	}
 	defer file.Close()
+	fmt.Println("Your file has been opened successfully.")
 
-	//Handle read file errors
-
-	if err != nil {
-		fmt.Println("Error: Cannot read file", err)
-	}
-
-	fmt.Println("Your file has been imported successfully.")
-
+	// Get file statistics
 	fileInfo, err := os.Stat(test)
 	if err != nil {
-		fmt.Println("There was an error processing your file.")
+		fmt.Printf("Error: Cannot retrieve file stats: %v\n", err)
 		return
 	}
 
+	// Print the total bytes in the file
 	stats := fileInfo.Size()
 	fmt.Printf("Total bytes in the file: %d\n", stats)
-
 }
