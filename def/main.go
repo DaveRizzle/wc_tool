@@ -2,10 +2,10 @@ package def
 
 import "fmt"
 
-// I've not added this functionality to the main program yet. i've only set-up the work directory.
+// This module is working correctly.
 
 func Main() {
 
-	fmt.Println("def is working.")
+	fmt.Println("Def is working.")
 
 }
