@@ -8,42 +8,33 @@ import (
 
 func Main() {
 
-	//open the file
-
+	// Open the file for reading
 	test := "test.txt"
-
-	//error handling for file import
-
 	file, err := os.Open(test)
 	if err != nil {
-		fmt.Println("Error: Cannot open file.")
+		fmt.Printf("Error opening file: %v\n", err) // Include the error object for more details
 		return
 	}
-	defer file.Close()
+	defer file.Close() // Ensure the file is closed after opening
 
-	//create scanner
-
+	// Create a new scanner to read the file
 	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanWords)
+	scanner.Split(bufio.ScanWords) // Set the scanner to split the input into words
 
-	//initialise the counter
-
+	// Initialize the word counter
 	wordCount := 0
 
-	//initialise the for loop
+	// Count words in the file
 	for scanner.Scan() {
 		wordCount++
-
 	}
 
-	//error handling for file read error
-
+	// Check for errors that occurred during scanning
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error: Cannot read the file", err)
+		fmt.Printf("Error reading the file: %v\n", err) // Include the error object for more details
 		return
 	}
 
-	//print out the total words in the file
+	// Print out the total number of words in the file
 	fmt.Printf("The total number of words in the file is: %d\n", wordCount)
-
 }
