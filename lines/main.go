@@ -2,36 +2,23 @@ package lines
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
-	"os"
 )
 
-func Main() {
-	// Import the file
-	test := "test.txt"
+// Process counts and prints the number of lines in the provided content bytes.
+func Process(content []byte) {
+	// Convert the []byte content to a Reader to use with bufio.Scanner
+	reader := bytes.NewReader(content)
+	scanner := bufio.NewScanner(reader)
 
-	// Open the file for reading
-	file, err := os.Open(test)
-	if err != nil {
-		fmt.Println("Error: Cannot open file", err)
-		return
-	}
-	defer file.Close()
-
-	// Create a scanner to read lines from the file
-	scanner := bufio.NewScanner(file)
-
-	// Initialize a line count
 	lineCount := 0
-
-	// Read lines and count them
 	for scanner.Scan() {
 		lineCount++
 	}
 
-	// Handle errors that occurred during scanning
 	if err := scanner.Err(); err != nil {
-		fmt.Printf("Error: Cannot read file: %v\n", err)
+		fmt.Printf("Error: Cannot read lines: %v\n", err)
 		return
 	}
 

@@ -2,25 +2,11 @@ package char
 
 import (
 	"fmt"
-	"os"
 	"unicode/utf8"
 )
 
-func Main() {
-
-	test := "test.txt"
-
-	//error handling for both opening and reading the file
-
-	file, err := os.ReadFile(test)
-	if err != nil {
-		fmt.Println("Error reading file", err)
-		os.Exit(1)
-	}
-
-	content := string(file)
-
+// Process counts and prints the number of characters in the provided content string.
+func Process(content string) {
 	charCount := utf8.RuneCountInString(content)
-
-	fmt.Printf("The file contains %d characters \n.", charCount)
+	fmt.Printf("The file contains %d characters.\n", charCount)
 }
