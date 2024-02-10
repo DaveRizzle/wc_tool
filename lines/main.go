@@ -10,7 +10,7 @@ func Main() {
 	// Import the file
 	test := "test.txt"
 
-	// Handle open file errors
+	// Open the file for reading
 	file, err := os.Open(test)
 	if err != nil {
 		fmt.Println("Error: Cannot open file", err)
@@ -29,8 +29,9 @@ func Main() {
 		lineCount++
 	}
 
+	// Handle errors that occurred during scanning
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error: Cannot read file", err)
+		fmt.Printf("Error: Cannot read file: %v\n", err)
 		return
 	}
 
