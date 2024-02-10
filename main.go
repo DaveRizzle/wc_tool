@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"ccwc/bytes"
 	"ccwc/char"
 	"ccwc/lines"
@@ -22,23 +23,37 @@ func main() {
 	// Determine if no flags were provided
 	noFlagsProvided := !(*getBytes || *getLines || *getWords || *getChar)
 
-	// Get filename from command-line arguments
+	var content []byte
+	var err error
+	var filename string
+
 	if len(flag.Args()) == 0 {
-		fmt.Println("Error: No file specified")
-		return
+		fmt.Println("No file specified. Please enter a filename:")
+		scanner := bufio.NewScanner(os.Stdin)
+		if scanner.Scan() {
+			filename = scanner.Text()
+		} else {
+			if err := scanner.Err(); err != nil {
+				fmt.Printf("Error reading input: %s\n", err)
+			} else {
+				fmt.Println("No input provided.")
+			}
+			return
+		}
+	} else {
+		filename = flag.Arg(0)
 	}
-	filename := flag.Arg(0)
 
 	// Read file into memory
-	content, err := os.ReadFile(filename)
+	content, err = os.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("Error reading file: %s\n", err)
 		return
 	}
 
-	// Default behavior or specific flags
+	// Process file based on flags
 	if noFlagsProvided || *getBytes {
-		bytes.ProcessFileStats(filename)
+		bytes.ProcessFileStats(filename) // Correctly calling your bytes module functionality
 	}
 	if noFlagsProvided || *getLines {
 		lines.Process(content)
@@ -46,8 +61,7 @@ func main() {
 	if noFlagsProvided || *getWords {
 		words.Process(content)
 	}
-	// The -m (character count) option is not included in the default behavior
 	if *getChar {
-		char.Process(string(content)) // Ensure char.Process accepts a string
+		char.Process(string(content))
 	}
 }
